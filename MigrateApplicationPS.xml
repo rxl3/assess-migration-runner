@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="MigrateApplicationPS" targetNamespace="http://xmlns.oracle.com/assess/MigrateApplicationPS" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://xmlns.oracle.com/assess/MigrateApplicationPS" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/assess/MigrateApplicationPS" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:inp1="http://xmlns.oracle.com/assess/MigrateApplicationPS" xmlns:inp2="http://xmlns.oracle.com/assess/MigrateApplicationPS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.oracle.com/assess/MigrateApplicationPS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="MigrateApplicationRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" name="lrn" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="processID" type="xsd:string"/>
+            <xsd:element minOccurs="0" name="applicationStatus" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="MigrateApplicationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="successfullyLodged" type="xsd:boolean"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="requestMessage">
+    <WL5G3N0:part element="WL5G3N1:MigrateApplicationRequest" name="requestMessage"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="responseMessage">
+    <WL5G3N0:part element="WL5G3N1:MigrateApplicationResponse" name="responseMessage"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="MigrateApplicationPort">
+    <WL5G3N0:operation name="Migrate">
+      <WL5G3N0:input message="WL5G3N1:requestMessage"/>
+      <WL5G3N0:output message="WL5G3N1:responseMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="MigrateApplicationBinding" type="WL5G3N1:MigrateApplicationPort">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="Migrate">
+      <WL5G3N2:operation soapAction="Migrate" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="requestMessage" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="responseMessage" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="MigrateApplicationBindingQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N1:MigrateApplicationBinding" name="MigrateApplicationBindingQSPort">
+      <WL5G3N2:address location="https://soacs-uat.afgonline.com.au:443/assess/migration/MigrateApplicationPS"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>
