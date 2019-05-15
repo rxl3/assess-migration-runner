@@ -12,13 +12,13 @@ const parser = csvParse({
 }, (err, output) => {
     output.shift(); // Remove title row
     appsToMigrate = output;
-    console.log(appsToMigrate);
+    // console.log(appsToMigrate);
     appsToMigrate.forEach(app => {
-        migrateApp(app[0], app[1], app[2]);
-        console.log('Migrating Application: ' + app[0] + ' with options: ' + app[1] + ', ' + app[2]);
+        migrateApp(app[0]);//, app[1], app[2]);
+        console.log('Migrating Application: ' + app[0]);// + ' with options: ' + app[1] + ', ' + app[2]);
     });
 });
-fs.createReadStream('apps.csv').pipe(parser);
+fs.createReadStream(process.argv[2]).pipe(parser);
 
 function migrateApp(appID, optionA, optionB) {
     stream.write('(' + appID + ') Attempting to migrate app\n');
@@ -31,7 +31,6 @@ function migrateApp(appID, optionA, optionB) {
         stream.write('(' + appID + ') Successful migration\n');
     })
     .catch(err => {
-        // console.log(err.response.body);
         if (!err.response.body.includes('<successfullyLodged>true</successfullyLodged>')) {
             stream.write('(' + appID + ') FAILED migrating\n');
             stream.write('Error log: ' + err + '\n');
